@@ -122,7 +122,7 @@ st.header("■ 計算結果")
 res_col1, res_col2 = st.columns(2)
 with res_col1:
     st.write(f"合計所得金額: {gokei_shotoku:.1f}万円")
-    st.write(f"課税所得金額: {kazei_shotoku:.1f}万円")
+    st.write(f"課税所得金額: {kazei_shotoku:.1f}万円※社会保険料を年収の15％とした概算")
     st.write(f"所得税金額: {shotokuzei_mae:.2f}万円")
     st.write(f"住宅ローン控除額（所得税）: {actual_shotoku_deduction:.2f}万円")
     st.write(f"控除後所得税額: {max(0, shotokuzei_mae - actual_shotoku_deduction):.2f}万円")
@@ -182,4 +182,5 @@ if st.button("simulation_result.docx を作成してダウンロード"):
 
     bio = io.BytesIO()
     doc.save(bio)
+
     st.download_button(label="📥 Wordファイルをダウンロード", data=bio.getvalue(), file_name="simulation_result.docx")
