@@ -143,9 +143,9 @@ with st.expander("【 実際の計算プロセス明細を確認する 】"):
     st.write(f"2. 課税所得: {gokei_shotoku:.1f} - {kiso_kojo}(基礎控除) - {shakai_hoken:.1f}(社保控除) - {ideco_nenkan + fuyo_kojo:.1f}(他控除) = {kazei_shotoku:.1f}万円")
     st.write(f"3. 所得税額: {s_formula} = {shotokuzei_mae:.2f}万円")
     st.write(f"4. ローン控除内訳:")
-    st.write(f"   - 合計額: ({loan_zandaka}万, {gendo_gaku}万のいずれか少ない方) * 0.7% = {loan_kojo_waku:.2f}万円")
+    st.write(f"   - 合計額: ({loan_zandaka}万（年末ローン残高）, {gendo_gaku}万（住宅種別による控除限度額）のいずれか少ない方) * 0.7% = {loan_kojo_waku:.2f}万円")
     st.write(f"   - 所得税から: {actual_shotoku_deduction:.2f}万円")
-    st.write(f"   - 住民税から: {actual_jumin_deduction:.2f}万円 (残枠:{remaining_waku:.2f}/上限:{juminzei_genkai:.2f}/税額:{juminzei_mae:.2f} の最小値)")
+    st.write(f"   - 住民税から: {actual_jumin_deduction:.2f}万円 (ローン控除合計額-控除額（所得税）:{remaining_waku:.2f}/上限（9.75万円又は課税所得の0.5％いずれか少ない方）:{juminzei_genkai:.2f}/住民税額:{juminzei_mae:.2f} の最小値)")
     st.write(f"5. 逆算根拠: (所得税{shotokuzei_mae:.2f}万 + 住民税上限{juminzei_genkai:.2f}万) / 0.7% = {optimal_loan_amount:.1f}万円")
 
 # --- 5. Wordダウンロード ---
@@ -185,4 +185,5 @@ if st.button("simulation_result.docx を作成してダウンロード"):
     doc.save(bio)
 
     st.download_button(label="📥 Wordファイルをダウンロード", data=bio.getvalue(), file_name="simulation_result.docx")
+
 
