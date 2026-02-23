@@ -123,6 +123,7 @@ res_col1, res_col2 = st.columns(2)
 with res_col1:
     st.write(f"合計所得金額: {gokei_shotoku:.1f}万円")
     st.write(f"課税所得金額: {kazei_shotoku:.1f}万円※社会保険料を年収の15％とした概算")
+    st.write(f"住宅ローン減税合計額: {actual_shotoku_deduction + actual_jumin_deduction:.1f}万円")
     st.write(f"所得税金額: {shotokuzei_mae:.2f}万円")
     st.write(f"住宅ローン控除額（所得税）: {actual_shotoku_deduction:.2f}万円")
     st.write(f"控除後所得税額: {max(0, shotokuzei_mae - actual_shotoku_deduction):.2f}万円")
@@ -138,8 +139,8 @@ if optimal_loan_amount > gendo_gaku:
 
 # --- 4. 計算プロセスの明細（元の文章を使用） ---
 with st.expander("【 実際の計算プロセス明細を確認する 】"):
-    st.write(f"1. 所得算出: {nenshu} - ({k_formula}) = {gokei_shotoku:.1f}万円")
-    st.write(f"2. 課税所得: {gokei_shotoku:.1f} - {kiso_kojo}(基礎) - {shakai_hoken:.1f}(社保) - {ideco_nenkan + fuyo_kojo:.1f}(他) = {kazei_shotoku:.1f}万円")
+    st.write(f"1. 所得算出: {nenshu}（年収） - ({k_formula}（給与所得控除）) = {gokei_shotoku:.1f}万円")
+    st.write(f"2. 課税所得: {gokei_shotoku:.1f} - {kiso_kojo}(基礎控除) - {shakai_hoken:.1f}(社保控除) - {ideco_nenkan + fuyo_kojo:.1f}(他控除) = {kazei_shotoku:.1f}万円")
     st.write(f"3. 所得税額: {s_formula} = {shotokuzei_mae:.2f}万円")
     st.write(f"4. ローン控除内訳:")
     st.write(f"   - 合計額: ({loan_zandaka}万, {gendo_gaku}万のいずれか少ない方) * 0.7% = {loan_kojo_waku:.2f}万円")
@@ -184,3 +185,4 @@ if st.button("simulation_result.docx を作成してダウンロード"):
     doc.save(bio)
 
     st.download_button(label="📥 Wordファイルをダウンロード", data=bio.getvalue(), file_name="simulation_result.docx")
+
